@@ -25,6 +25,42 @@ class _TasksListPageState extends State<TasksListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (_) {
+              return AlertDialog(
+                title: const Text('Adicione uma Tarefa'),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextFormField(
+                      minLines: 1,
+                      maxLines: 4,
+                      maxLength: 250,
+                      decoration: InputDecoration(
+                        hintText: 'Título da tarefa',
+                        counter: const SizedBox(),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TextFormField(
+                      minLines: 4,
+                      maxLines: null,
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
+        child: const Icon(
+          Icons.add,
+        ),
+      ),
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
