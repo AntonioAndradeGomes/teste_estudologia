@@ -13,4 +13,7 @@ abstract class TasksDao {
 
   @Query('SELECT * FROM task ORDER BY id DESC')
   Future<List<TaskModel>> getAllTasks();
+
+  @Update()
+  Future<void> updateTask(TaskModel task);
 }

@@ -23,4 +23,25 @@ class TasksRepositoryImpl extends TasksRepository {
       TaskModel.fromEntity(entity),
     );
   }
+
+  @override
+  Future<void> changeStateTask(TaskEntity entity) async {
+    final taskFinal = entity.copyWith(
+      taskCompletionDate:
+          entity.taskCompletionDate == null || entity.taskCompletionDate == ''
+              ? DateTime.now().toIso8601String()
+              : null,
+    );
+    await appDatabase.taskDao.updateTask(
+      TaskModel.fromEntity(taskFinal),
+    );
+    return;
+  }
+
+  @override
+  Future<void> removeTask(TaskEntity entity) {
+    return appDatabase.taskDao.deleteTask(
+      TaskModel.fromEntity(entity),
+    );
+  }
 }

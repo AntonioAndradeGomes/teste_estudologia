@@ -78,6 +78,13 @@ class _TasksListPageState extends State<TasksListPage> {
             itemBuilder: (_, index) {
               return TaskCard(
                 entity: state.tasks![index],
+                concludOnTap: () {
+                  bloc.add(
+                    AlterStateTask(
+                      state.tasks![index],
+                    ),
+                  );
+                },
               );
             },
           );

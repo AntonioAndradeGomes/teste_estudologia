@@ -46,6 +46,7 @@ class _SavedTaskModalState extends State<SavedTaskModal> {
                 },
                 decoration: const InputDecoration(
                   labelText: 'Título da tarefa',
+                  isDense: true,
                   counter: SizedBox(),
                 ),
               ),
@@ -62,6 +63,7 @@ class _SavedTaskModalState extends State<SavedTaskModal> {
                 maxLines: null,
                 decoration: const InputDecoration(
                   labelText: 'Descrição',
+                  isDense: true,
                   counter: SizedBox(),
                 ),
               ),
