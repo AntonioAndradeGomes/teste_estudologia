@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasks_app/dependency_injector.dart';
+import 'package:tasks_app/features/tasks/domain/entities/task_entity.dart';
 import 'package:tasks_app/features/tasks/presentation/bloc/task_event.dart';
 import 'package:tasks_app/features/tasks/presentation/bloc/tasks_bloc.dart';
 import 'package:tasks_app/features/tasks/presentation/bloc/tasks_state.dart';
+import 'package:tasks_app/features/tasks/presentation/widgets/saved_task_modal.dart';
 import 'package:tasks_app/features/tasks/presentation/widgets/task_card.dart';
 
 class TasksListPage extends StatefulWidget {
@@ -26,36 +28,18 @@ class _TasksListPageState extends State<TasksListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showDialog(
+        onPressed: () async {
+          final entity = await showAdaptiveDialog<TaskEntity>(
             context: context,
             builder: (_) {
-              return AlertDialog(
-                title: const Text('Adicione uma Tarefa'),
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextFormField(
-                      minLines: 1,
-                      maxLines: 4,
-                      maxLength: 250,
-                      decoration: InputDecoration(
-                        hintText: 'Título da tarefa',
-                        counter: const SizedBox(),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    TextFormField(
-                      minLines: 4,
-                      maxLines: null,
-                    ),
-                  ],
-                ),
-              );
+              return const SavedTaskModal();
             },
           );
+          if (entity != null) {
+            bloc.add(
+              SaveTask(entity),
+            );
+          }
         },
         child: const Icon(
           Icons.add,
