@@ -8,6 +8,14 @@ sealed class TasksState extends Equatable {
     this.tasks,
   });
 
+  TasksState copyWith({
+    List<TaskEntity>? tasks,
+  }) {
+    return DoneTasksState(
+      tasks ?? this.tasks,
+    );
+  }
+
   @override
   List<Object> get props => tasks!;
 }

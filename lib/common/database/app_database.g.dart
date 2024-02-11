@@ -138,7 +138,7 @@ class _$TasksDao extends TasksDao {
 
   @override
   Future<List<TaskModel>> getAllTasks() async {
-    return _queryAdapter.queryList('SELECT * FROM task',
+    return _queryAdapter.queryList('SELECT * FROM task ORDER BY id DESC',
         mapper: (Map<String, Object?> row) => TaskModel(
             id: row['id'] as int?,
             content: row['content'] as String?,
@@ -148,8 +148,9 @@ class _$TasksDao extends TasksDao {
   }
 
   @override
-  Future<void> insertTask(TaskModel task) async {
-    await _taskModelInsertionAdapter.insert(task, OnConflictStrategy.abort);
+  Future<int> insertTask(TaskModel task) {
+    return _taskModelInsertionAdapter.insertAndReturnId(
+        task, OnConflictStrategy.replace);
   }
 
   @override

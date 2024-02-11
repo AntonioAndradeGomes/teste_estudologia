@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasks_app/dependency_injector.dart';
+import 'package:tasks_app/features/tasks/domain/entities/task_entity.dart';
 import 'package:tasks_app/features/tasks/presentation/bloc/task_event.dart';
 import 'package:tasks_app/features/tasks/presentation/bloc/tasks_bloc.dart';
 import 'package:tasks_app/features/tasks/presentation/bloc/tasks_state.dart';
+import 'package:tasks_app/features/tasks/presentation/widgets/saved_task_modal.dart';
 import 'package:tasks_app/features/tasks/presentation/widgets/task_card.dart';
 
 class TasksListPage extends StatefulWidget {
@@ -25,6 +27,24 @@ class _TasksListPageState extends State<TasksListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          final entity = await showAdaptiveDialog<TaskEntity>(
+            context: context,
+            builder: (_) {
+              return const SavedTaskModal();
+            },
+          );
+          if (entity != null) {
+            bloc.add(
+              SaveTask(entity),
+            );
+          }
+        },
+        child: const Icon(
+          Icons.add,
+        ),
+      ),
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
