@@ -44,4 +44,12 @@ class TasksRepositoryImpl extends TasksRepository {
       TaskModel.fromEntity(entity),
     );
   }
+
+  @override
+  Future<void> editTask(TaskEntity entity) async {
+    await appDatabase.taskDao.updateTask(
+      TaskModel.fromEntity(entity),
+    );
+    return;
+  }
 }

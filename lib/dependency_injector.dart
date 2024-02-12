@@ -3,10 +3,12 @@ import 'package:tasks_app/common/database/app_database.dart';
 import 'package:tasks_app/features/tasks/data/repository/tasks_repository_impl.dart';
 import 'package:tasks_app/features/tasks/domain/repository/tasks_repository.dart';
 import 'package:tasks_app/features/tasks/domain/usecases/change_state_task.dart';
+import 'package:tasks_app/features/tasks/domain/usecases/edit_task.dart';
 import 'package:tasks_app/features/tasks/domain/usecases/get_all_tasks.dart';
 import 'package:tasks_app/features/tasks/domain/usecases/remove_task.dart';
 import 'package:tasks_app/features/tasks/domain/usecases/save_task.dart';
-import 'package:tasks_app/features/tasks/presentation/bloc/tasks_bloc.dart';
+import 'package:tasks_app/features/tasks/presentation/bloc/edit/task_edit_bloc.dart';
+import 'package:tasks_app/features/tasks/presentation/bloc/list/tasks_bloc.dart';
 
 final getIt = GetIt.instance;
 
@@ -46,11 +48,23 @@ Future<void> initializeDependencies() async {
       repository: getIt(),
     ),
   );
+
+  getIt.registerSingleton<EditTaskUseCase>(
+    EditTaskUseCase(
+      repository: getIt(),
+    ),
+  );
   getIt.registerSingleton<TasksBloc>(
     TasksBloc(
       getIt(),
       getIt(),
       getIt(),
+      getIt(),
+    ),
+  );
+
+  getIt.registerFactory<TasksEditBloc>(
+    () => TasksEditBloc(
       getIt(),
     ),
   );

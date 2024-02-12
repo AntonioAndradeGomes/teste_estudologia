@@ -8,8 +8,8 @@ import 'package:tasks_app/features/tasks/domain/usecases/change_state_task.dart'
 import 'package:tasks_app/features/tasks/domain/usecases/get_all_tasks.dart';
 import 'package:tasks_app/features/tasks/domain/usecases/remove_task.dart';
 import 'package:tasks_app/features/tasks/domain/usecases/save_task.dart';
-import 'package:tasks_app/features/tasks/presentation/bloc/task_event.dart';
-import 'package:tasks_app/features/tasks/presentation/bloc/tasks_state.dart';
+import 'package:tasks_app/features/tasks/presentation/bloc/list/task_event.dart';
+import 'package:tasks_app/features/tasks/presentation/bloc/list/tasks_state.dart';
 
 class TasksBloc extends Bloc<TaskEvent, TasksState> {
   final GetAllTasksUseCase getAllTasksUseCase;

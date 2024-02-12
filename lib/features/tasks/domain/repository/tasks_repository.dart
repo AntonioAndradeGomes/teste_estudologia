@@ -5,4 +5,5 @@ abstract class TasksRepository {
   Future<int> saveTask(TaskEntity entity);
   Future<void> changeStateTask(TaskEntity entity);
   Future<void> removeTask(TaskEntity entity);
+  Future<void> editTask(TaskEntity entity);
 }
