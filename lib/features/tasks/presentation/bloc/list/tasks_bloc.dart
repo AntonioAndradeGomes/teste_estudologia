@@ -4,23 +4,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tasks_app/features/tasks/domain/entities/task_entity.dart';
+import 'package:tasks_app/features/tasks/domain/usecases/change_state_task.dart';
 import 'package:tasks_app/features/tasks/domain/usecases/get_all_tasks.dart';
+import 'package:tasks_app/features/tasks/domain/usecases/remove_task.dart';
 import 'package:tasks_app/features/tasks/domain/usecases/save_task.dart';
-import 'package:tasks_app/features/tasks/presentation/bloc/task_event.dart';
-import 'package:tasks_app/features/tasks/presentation/bloc/tasks_state.dart';
+import 'package:tasks_app/features/tasks/presentation/bloc/list/task_event.dart';
+import 'package:tasks_app/features/tasks/presentation/bloc/list/tasks_state.dart';
 
 class TasksBloc extends Bloc<TaskEvent, TasksState> {
   final GetAllTasksUseCase getAllTasksUseCase;
   final SaveTaskUseCase saveTaskUseCase;
+  final ChangeStateTaskUseCase changeStateTaskUseCase;
+  final RemoveTaskUseCase removeTaskUseCase;
   TasksBloc(
     this.getAllTasksUseCase,
     this.saveTaskUseCase,
+    this.changeStateTaskUseCase,
+    this.removeTaskUseCase,
   ) : super(
           const LoadingTasksState(),
         ) {
     on<GetSavedTasks>(onGetSavedTasks);
     on<RemoveTask>(onRemoveTask);
     on<SaveTask>(onSaveTask);
+    on<AlterStateTask>(onAlterStateFromTask);
   }
 
   Future<void> onGetSavedTasks(
@@ -36,7 +43,15 @@ class TasksBloc extends Bloc<TaskEvent, TasksState> {
   Future<void> onRemoveTask(
     RemoveTask event,
     Emitter<TasksState> emit,
-  ) async {}
+  ) async {
+    await removeTaskUseCase.call(
+      params: event.entity,
+    );
+    final tasks = await getAllTasksUseCase.call();
+    emit(
+      DoneTasksState(tasks),
+    );
+  }
 
   Future<void> onSaveTask(
     SaveTask event,
@@ -46,12 +61,8 @@ class TasksBloc extends Bloc<TaskEvent, TasksState> {
       final taskId = await saveTaskUseCase.call(
         params: event.entity,
       );
-      final task = TaskEntity(
+      final task = event.entity!.copyWith(
         id: taskId,
-        content: event.entity!.content,
-        description: event.entity!.description,
-        createdAt: event.entity!.createdAt,
-        taskCompletionDate: event.entity!.taskCompletionDate,
       );
       final List<TaskEntity> tasks = List.from(state.tasks!);
       tasks.insert(0, task);
@@ -78,5 +89,18 @@ class TasksBloc extends Bloc<TaskEvent, TasksState> {
         backgroundColor: Colors.red,
       );
     }
+  }
+
+  Future<void> onAlterStateFromTask(
+    AlterStateTask event,
+    Emitter<TasksState> emit,
+  ) async {
+    await changeStateTaskUseCase.call(
+      params: event.entity,
+    );
+    final tasks = await getAllTasksUseCase.call();
+    emit(
+      DoneTasksState(tasks),
+    );
   }
 }

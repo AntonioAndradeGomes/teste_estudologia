@@ -114,6 +114,17 @@ class _$TasksDao extends TasksDao {
                   'createdAt': item.createdAt,
                   'taskCompletionDate': item.taskCompletionDate
                 }),
+        _taskModelUpdateAdapter = UpdateAdapter(
+            database,
+            'task',
+            ['id'],
+            (TaskModel item) => <String, Object?>{
+                  'id': item.id,
+                  'content': item.content,
+                  'description': item.description,
+                  'createdAt': item.createdAt,
+                  'taskCompletionDate': item.taskCompletionDate
+                }),
         _taskModelDeletionAdapter = DeletionAdapter(
             database,
             'task',
@@ -134,6 +145,8 @@ class _$TasksDao extends TasksDao {
 
   final InsertionAdapter<TaskModel> _taskModelInsertionAdapter;
 
+  final UpdateAdapter<TaskModel> _taskModelUpdateAdapter;
+
   final DeletionAdapter<TaskModel> _taskModelDeletionAdapter;
 
   @override
@@ -151,6 +164,11 @@ class _$TasksDao extends TasksDao {
   Future<int> insertTask(TaskModel task) {
     return _taskModelInsertionAdapter.insertAndReturnId(
         task, OnConflictStrategy.replace);
+  }
+
+  @override
+  Future<void> updateTask(TaskModel task) async {
+    await _taskModelUpdateAdapter.update(task, OnConflictStrategy.abort);
   }
 
   @override

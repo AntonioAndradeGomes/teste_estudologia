@@ -33,3 +33,11 @@ class SaveTask extends TaskEvent {
           entity: entity,
         );
 }
+
+class AlterStateTask extends TaskEvent {
+  const AlterStateTask(
+    TaskEntity entity,
+  ) : super(
+          entity: entity,
+        );
+}

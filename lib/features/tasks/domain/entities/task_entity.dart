@@ -27,7 +27,7 @@ class TaskEntity extends Equatable {
       content: content ?? this.content,
       description: description ?? this.description,
       createdAt: createdAt ?? this.createdAt,
-      taskCompletionDate: taskCompletionDate ?? this.taskCompletionDate,
+      taskCompletionDate: taskCompletionDate,
     );
   }
 
@@ -40,6 +40,9 @@ class TaskEntity extends Equatable {
         taskCompletionDate,
       ];
 
+  DateTime get createdAtForDate => DateTime.parse(createdAt!);
+
+  DateTime get taskCompletionDateForDate => DateTime.parse(taskCompletionDate!);
   @override
   String toString() {
     return 'TaskEntity{id: $id, content: $content, description: $description, createdAt: $createdAt, taskCompletionDate: $taskCompletionDate}';

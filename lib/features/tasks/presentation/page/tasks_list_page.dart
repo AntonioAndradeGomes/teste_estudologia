@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasks_app/dependency_injector.dart';
 import 'package:tasks_app/features/tasks/domain/entities/task_entity.dart';
-import 'package:tasks_app/features/tasks/presentation/bloc/task_event.dart';
-import 'package:tasks_app/features/tasks/presentation/bloc/tasks_bloc.dart';
-import 'package:tasks_app/features/tasks/presentation/bloc/tasks_state.dart';
+import 'package:tasks_app/features/tasks/presentation/bloc/list/task_event.dart';
+import 'package:tasks_app/features/tasks/presentation/bloc/list/tasks_bloc.dart';
+import 'package:tasks_app/features/tasks/presentation/bloc/list/tasks_state.dart';
 import 'package:tasks_app/features/tasks/presentation/widgets/saved_task_modal.dart';
 import 'package:tasks_app/features/tasks/presentation/widgets/task_card.dart';
 
@@ -78,6 +78,13 @@ class _TasksListPageState extends State<TasksListPage> {
             itemBuilder: (_, index) {
               return TaskCard(
                 entity: state.tasks![index],
+                concludOnTap: () {
+                  bloc.add(
+                    AlterStateTask(
+                      state.tasks![index],
+                    ),
+                  );
+                },
               );
             },
           );
