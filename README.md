@@ -1,16 +1,14 @@
-# tasks_app
+# Minhas tarefas
 
-A new Flutter project.
+Se trata de um teste para desenvolvedor Flutter Pleno com os seguintes requisitos:
 
-## Getting Started
+- Permitir adicionar, remover e marcar tarefas como concluídas.
+- Incluir uma tela para adicionar detalhes da tarefa.
+- Implementar persistência de dados (pode ser local).
 
-This project is a starting point for a Flutter application.
+Foram utilizados os seguintes conhecimentos:
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Bloc
+- Clean architecture
+- Injeção de dependências
+- Banco de dados local: Uso do Floor
