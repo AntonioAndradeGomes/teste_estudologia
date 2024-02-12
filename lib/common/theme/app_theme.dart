@@ -12,7 +12,7 @@ abstract class AppTheme {
     ),
     useMaterial3ErrorColors: true,
     visualDensity: FlexColorScheme.comfortablePlatformDensity,
-    useMaterial3: false,
+    useMaterial3: true,
     fontFamily: GoogleFonts.notoSans().fontFamily,
     appBarElevation: 0,
   );
@@ -29,7 +29,7 @@ abstract class AppTheme {
     ),
     useMaterial3ErrorColors: true,
     visualDensity: FlexColorScheme.comfortablePlatformDensity,
-    useMaterial3: false,
+    useMaterial3: true,
     fontFamily: GoogleFonts.notoSans().fontFamily,
     appBarElevation: 0,
   );
