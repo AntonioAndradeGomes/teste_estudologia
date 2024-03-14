@@ -31,7 +31,8 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
-
+/simple_login/build/
+/tasks_app_bloc/build/
 # Symbolication related
 app.*.symbols
 
